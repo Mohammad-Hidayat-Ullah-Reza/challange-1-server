@@ -46,6 +46,25 @@ async function run() {
       });
       res.send(result);
     });
+
+    app.put("/userData", async (req, res) => {
+      const id = req.body.userId;
+      const data = req.body.data;
+      console.log(data, id);
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: {
+          data,
+        },
+      };
+      const result = await userDataCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
   } finally {
   }
 }
